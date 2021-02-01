@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(DefaultBuildType)
 
 # ==== Project Name ====
@@ -34,7 +34,7 @@ add_message_files(FILES PacketMsg.msg)
 add_service_files(FILES OSConfigSrv.srv)
 generate_messages(DEPENDENCIES std_msgs sensor_msgs geometry_msgs)
 
-set(_ouster_ros_INCLUDE_DIRS "include;../ouster_client/include;../ouster_viz/include")
+set(_ouster_ros_INCLUDE_DIRS "include;./ouster_client/include;./ouster_viz/include")
 
 catkin_package(
   INCLUDE_DIRS
@@ -57,8 +57,7 @@ catkin_package(
 # libraries are the recommended way to do this, but require >=3.13 to propagate usage requirements.
 set(_SAVE_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 set(BUILD_SHARED_LIBS OFF)
-add_subdirectory(../ouster_client ouster_client EXCLUDE_FROM_ALL)
-add_subdirectory(../ouster_viz ouster_viz EXCLUDE_FROM_ALL)
+add_subdirectory(./ouster_client ouster_client EXCLUDE_FROM_ALL)
 set(BUILD_SHARED_LIBS ${_SAVE_BUILD_SHARED_LIBS})
 
 # catkin adds all include dirs to a single variable, don't try to use targets
@@ -66,7 +65,7 @@ include_directories(${_ouster_ros_INCLUDE_DIRS} SYSTEM ${catkin_INCLUDE_DIRS})
 
 add_library(ouster_ros src/ros.cpp)
 target_link_libraries(ouster_ros PUBLIC ${catkin_LIBRARIES} ouster_build PRIVATE
-  -Wl,--whole-archive ouster_client ouster_viz -Wl,--no-whole-archive)
+  -Wl,--whole-archive ouster_client -Wl,--no-whole-archive)
 add_dependencies(ouster_ros ${PROJECT_NAME}_gencpp)
 
 # ==== Executables ====
