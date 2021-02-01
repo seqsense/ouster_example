@@ -8,8 +8,8 @@ project(ouster_ros)
 
 # ==== Requirements ====
 find_package(Eigen3 REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(glfw3 REQUIRED)
+#find_package(GLEW REQUIRED)
+#find_package(glfw3 REQUIRED)
 
 find_package(
   catkin REQUIRED
@@ -49,7 +49,7 @@ catkin_package(
     sensor_msgs
     geometry_msgs
   DEPENDS
-    EIGEN3 GLFW3 GLEW)
+    EIGEN3)
 
 # ==== Libraries ====
 # Build static libraries and bundle them into ouster_ros using the `--whole-archive` flag. This is
@@ -78,9 +78,9 @@ add_executable(os_cloud_node src/os_cloud_node.cpp)
 target_link_libraries(os_cloud_node ouster_ros ${catkin_LIBRARIES})
 add_dependencies(os_cloud_node ${PROJECT_NAME}_gencpp)
 
-add_executable(viz_node src/viz_node.cpp)
-target_link_libraries(viz_node ouster_ros ${catkin_LIBRARIES} glfw GLEW)
-add_dependencies(viz_node ${PROJECT_NAME}_gencpp)
+#add_executable(viz_node src/viz_node.cpp)
+#target_link_libraries(viz_node ouster_ros ${catkin_LIBRARIES} glfw GLEW)
+#add_dependencies(viz_node ${PROJECT_NAME}_gencpp)
 
 add_executable(img_node src/img_node.cpp)
 target_link_libraries(img_node ouster_ros ${catkin_LIBRARIES})
@@ -88,7 +88,7 @@ add_dependencies(img_node ${PROJECT_NAME}_gencpp)
 
 # ==== Install ====
 install(
-  TARGETS ouster_ros os_node os_cloud_node viz_node img_node
+  TARGETS ouster_ros os_node os_cloud_node img_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
